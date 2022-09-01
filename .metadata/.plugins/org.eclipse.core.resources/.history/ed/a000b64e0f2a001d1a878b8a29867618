@@ -1,0 +1,13 @@
+package com.devsuperior.dsdeliver.controllers;
+
+import com.devsuperior.dsdeliver.service.ProductService;
+
+public class ProductController {
+	private ProductService productService;
+	
+	public ProductController(ProductService productService) {
+		this.productService = productService;
+	}
+	
+	p
+}
