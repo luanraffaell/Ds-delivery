@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.dsdeliver.dto.ProductDTO;
 import com.devsuperior.dsdeliver.entities.Product;
+import com.devsuperior.dsdeliver.entities.exceptions.ProductNotFoundException;
 import com.devsuperior.dsdeliver.repositories.ProductRepository;
 
 @Service
@@ -23,5 +24,10 @@ public class ProductService {
 	public List<ProductDTO> findAll(){
 		List<Product> list = productRepository.findAllByOrderByNameAsc();
 		return list.stream().map(x -> new ProductDTO(x)).collect(Collectors.toList());
+	}
+	
+	public ProductDTO findById(Long id) {
+		return new ProductDTO(productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product not found"))); 
+		
 	}
 }

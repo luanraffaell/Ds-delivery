@@ -2,10 +2,7 @@ package com.devsuperior.dsdeliver.service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,42 +12,48 @@ import com.devsuperior.dsdeliver.dto.ProductDTO;
 import com.devsuperior.dsdeliver.entities.Order;
 import com.devsuperior.dsdeliver.entities.OrderStatus;
 import com.devsuperior.dsdeliver.entities.Product;
+import com.devsuperior.dsdeliver.entities.exceptions.BusinessException;
+import com.devsuperior.dsdeliver.entities.exceptions.OrderNotFoundException;
+import com.devsuperior.dsdeliver.entities.exceptions.ProductNotFoundException;
 import com.devsuperior.dsdeliver.repositories.OrderRepository;
-import com.devsuperior.dsdeliver.repositories.ProductRepository;
 
 @Service
 public class OrderService {
-	private OrderRepository OrderRepository;
-	private ProductRepository productRepository;
+	private OrderRepository orderRepository;
+	private ProductService productService;
 	
-	public OrderService(OrderRepository OrderRepository,ProductRepository productRepository) {
-		this.OrderRepository = OrderRepository;
-		this.productRepository = productRepository;
+	public OrderService(OrderRepository orderRepository,ProductService productService) {
+		this.orderRepository = orderRepository;
+		this.productService = productService;
+	}
+	public OrderDTO findById(Long id) {
+		return new OrderDTO(orderRepository.findById(id).orElseThrow(() ->  new OrderNotFoundException(String.format("There is no order with id:%d, please try again", id))));
 	}
 	
 	@Transactional(readOnly =true)
 	public List<OrderDTO> findAll(){
-		List<Order> list = OrderRepository.findOrdersWithProducts();
+		List<Order> list = orderRepository.findOrdersWithProducts();
 		return list.stream().map(x -> new OrderDTO(x)).collect(Collectors.toList());
 	}
 	
-	@Transactional(readOnly =true)
+	@Transactional
 	public OrderDTO insert(OrderDTO dto){
 		Order order = new Order(null,dto.getAddress(),dto.getLatitude(),dto.getLongitude(),Instant.now(),OrderStatus.PENDING);
+		try {
 		for(ProductDTO p : dto.getProducts()) {
-			Optional<Product> product = productRepository.findById(p.getId());
-			if(product.isPresent()) {
-				order.getProducts().add(product.get());
-			}
+			ProductDTO product = productService.findById(p.getId());
+				order.getProducts().add(new Product(product.getId(), product.getName(), product.getPrice(), product.getDescription(), product.getDescription()));
 		}
-		order = OrderRepository.save(order);
-		return new OrderDTO(order);
+		return new OrderDTO(orderRepository.save(order));
+		}catch(ProductNotFoundException e) {
+			throw new BusinessException(e.getMessage());
+		}
 	}
 	@Transactional
 	public OrderDTO setDelivered(Long id) {
-		Order order = OrderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+		Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("There is no order with id:"+id));
 		order.setStatus(OrderStatus.DELIVERED);
-		OrderRepository.save(order);
+		orderRepository.save(order);
 		return new OrderDTO(order);
 	}
 }
