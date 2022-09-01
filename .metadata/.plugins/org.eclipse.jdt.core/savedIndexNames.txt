@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+/media/luan/3D6F9F497BBC9BBB/Temp/Nelio/dsdeliver/.metadata/.plugins/org.eclipse.jdt.core
+1476245916.index
+2021587227.index
