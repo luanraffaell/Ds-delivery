@@ -8,3 +8,6 @@
 1662053846894	Copy compilation unit
 1662053989954	Rename type 'ProductException'
 1662054005325	Rename type 'OrderException'
+1662058195990	Move compilation unit
+1662061068196	Rename enum constant 'RECURSO_NAO_ENCONTRADO'
+1662061159719	Rename enum constant 'ERRO_NEGOCIO'

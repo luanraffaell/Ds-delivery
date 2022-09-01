@@ -27,7 +27,7 @@ public class ProductService {
 	}
 	
 	public ProductDTO findById(Long id) {
-		return new ProductDTO(productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product not found"))); 
+		return new ProductDTO(productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("There is no product with the id:"+id))); 
 		
 	}
 }
