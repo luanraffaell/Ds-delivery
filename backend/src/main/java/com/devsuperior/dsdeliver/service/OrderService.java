@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +44,13 @@ public class OrderService {
 			}
 		}
 		order = OrderRepository.save(order);
+		return new OrderDTO(order);
+	}
+	@Transactional
+	public OrderDTO setDelivered(Long id) {
+		Order order = OrderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+		order.setStatus(OrderStatus.DELIVERED);
+		OrderRepository.save(order);
 		return new OrderDTO(order);
 	}
 }
