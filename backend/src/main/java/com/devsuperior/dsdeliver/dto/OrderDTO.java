@@ -6,18 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
+
+import com.devsuperior.dsdeliver.core.validation.Groups;
 import com.devsuperior.dsdeliver.entities.Order;
 import com.devsuperior.dsdeliver.entities.OrderStatus;
 
 public class OrderDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	
+	@NotNull
 	private String address;
+	@NotNull
 	private Double latitude;
+	@NotNull
 	private Double longitude;
 	private Instant moment;
 	private OrderStatus status;
 	
+	@Valid
+	@ConvertGroup(from = Default.class, to = Groups.ProductId.class)
+	@NotEmpty
 	private List<ProductDTO> products = new ArrayList<>();
 	public OrderDTO() {
 	}

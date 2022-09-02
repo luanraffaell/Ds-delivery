@@ -3,11 +3,16 @@ package com.devsuperior.dsdeliver.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.validation.constraints.NotNull;
+
+import com.devsuperior.dsdeliver.core.validation.Groups;
 import com.devsuperior.dsdeliver.entities.Product;
 
 public class ProductDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	
+	@NotNull(groups = Groups.ProductId.class)
 	private Long id;
 	private String name;
 	private Double price;
