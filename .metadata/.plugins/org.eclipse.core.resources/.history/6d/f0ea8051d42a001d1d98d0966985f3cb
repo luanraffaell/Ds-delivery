@@ -1,0 +1,5 @@
+package com.devsuperior.dsdeliver.security;
+
+public class SecurityConfig {
+
+}
