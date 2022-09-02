@@ -7,7 +7,19 @@
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="org.springframework.context.i18n.LocaleContextHolder"/>
     <fullyQualifiedTypeName name="com.devsuperior.dsdeliver.controllers.exceptions.Problem.Field"/>
+    <fullyQualifiedTypeName name="javax.persistence.Id"/>
+    <fullyQualifiedTypeName name="javax.persistence.Column"/>
     <fullyQualifiedTypeName name="javax.validation.constraints.NotBlank"/>
-    <fullyQualifiedTypeName name="javax.validation.constraints.NotNull"/>
+    <fullyQualifiedTypeName name="com.devsuperior.dsdeliver.entities.exceptions.BusinessException"/>
+    <fullyQualifiedTypeName name="com.devsuperior.dsdeliver.repositories.ProductRepository"/>
+    <fullyQualifiedTypeName name="com.devsuperior.dsdeliver.entities.exceptions.ProductNotFoundException"/>
+    <fullyQualifiedTypeName name="org.hibernate.validator.constraints.NotEmpty"/>
+    <fullyQualifiedTypeName name="javax.validation.constraints.NotEmpty"/>
     <fullyQualifiedTypeName name="javax.validation.Valid"/>
+    <fullyQualifiedTypeName name="javax.validation.groups.ConvertGroup"/>
+    <fullyQualifiedTypeName name="javax.validation.groups.Default"/>
+    <fullyQualifiedTypeName name="javax.validation.constraints.NotNull"/>
+    <fullyQualifiedTypeName name="com.devsuperior.dsdeliver.core.validation.Groups"/>
+    <fullyQualifiedTypeName name="com.devsuperior.dsdeliver.core.validation.Groups.ProductId"/>
+    <fullyQualifiedTypeName name="org.springframework.context.MessageSource"/>
 </qualifiedTypeNameHistroy>
